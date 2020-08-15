@@ -1,31 +1,29 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-void insert(vector<int>&v, int temp){
+void insert(int *a, int n, int temp){
     
-    if(v.size()==0||v[v.size()-1]<=temp){
-        v.push_back(temp);
-        return;
+    if(n==0||(a[n-1]<=temp)){
+        a[n]=temp;
+        return ;
     }
 
-    int val = v[v.size()-1];
-    v.pop_back();
-    insert(v,temp);
-
-    v.push_back(val);
+    int val = a[n-1];
+    insert(a, n-1, temp);
+    a[n]=val;
 
 }
 
 
-void sort_recursive(vector<int>&v){
+void sort_recursive(int *a, int n){
 
-    if(v.size()==1)
-    return;
+    if(n==1)
+        return;
 
-    int temp= v[v.size()-1];
-    v.pop_back();
-    sort_recursive(v);
-    insert(v,temp);
+    int temp = a[n-1];
+    sort_recursive(a,n-1);
+
+    insert(a,n-1,temp);
 } 
 
 
@@ -33,16 +31,17 @@ int main()
 {
     int n;
     cin>>n;
-    vector<int>v(n);
+
+
+    int *a = new int[n];
 
     for(int i=0;i<n;i++){
-        cin>>v[i];
+        cin>>a[i];
     }
 
-    sort_recursive(v);
-    cout<<endl;
+    sort_recursive(a, n);
+
     for(int i=0;i<n;i++){
-        cout<<v[i]<<" ";
+        cout<<a[i]<<" ";
     }
-    
 }
