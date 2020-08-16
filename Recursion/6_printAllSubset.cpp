@@ -18,7 +18,7 @@ void printAllSubset(int *a, int n, int *output, int size)
     for(int i=0;i<size;i++){
         smallOutput[i]=output[i];
     }
-    smallOutput[size]=a[0];
+    smalloutput[size]=a[0];
 
     printAllSubset(a+1,n-1,smallOutput,size+1);
 
