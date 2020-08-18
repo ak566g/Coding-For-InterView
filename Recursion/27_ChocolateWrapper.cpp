@@ -29,7 +29,11 @@ int maxChocolates(int money, int price, int wrap)
 
     int chocolates = money/price;
 
+    // recursive solution
     return chocolates + maxChocolates_wrappers(chocolates, wrap);
+
+    // formula based solution
+    // return chocolates + (chocolates-1)/(wrap-1);
 }
 
 
