@@ -9,8 +9,8 @@
 9.  Minimum difference element in a sorted array
 10. Bitonic array max element
 11. Searching in bitonic array
-12. Searching in row-wise sorted matrix
-13. Searching in column-wise sorted matrix
+12. Searching in row-wise and column-wise sorted matrix
+13. STL that uses Binary search as underlying algos
 14. Find element in sorted array that appears only once
 15. Binary search on answers concept
 16. Allocated minimum number of pages
@@ -22,5 +22,4 @@
 22. Painters Partition Problem
 23. ROTI/PRATA - SPOJ
 24. Double Helix - SPOJ
-25. Subser Sums
-26. STL that uses Binary search as underlying algos
+25. Subset Sums 
