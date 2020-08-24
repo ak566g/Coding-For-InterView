@@ -1,9 +1,10 @@
 
-#When should we think about DP
-    1.  Mostly problem will of optimisation or reducible to optimisation
-    2.  Overlapping subproblem
+When should we think about DP
 
-#Greedy vs Divide and Conquer vs DP
+        1.  Mostly problem will of optimisation or reducible to optimisation
+        2.  Overlapping subproblem
+
+Greedy vs Divide and Conquer vs DP
 
     Greedy
         1.  Greedy algorithms are which find optimal solution at every stage and hope for finding global optimum at the end.
@@ -17,7 +18,7 @@
         1.  DP made decision based on all its previous decisoin
         2.  Overlapping subproblems
 
-#When to use Memoization and when to use Tabulation
+When to use Memoization and when to use Tabulation
 
     Memoization Top-Down
         1.  Recursion with memoization is better whenever the state is sparse space (number of different subproblems are less).
