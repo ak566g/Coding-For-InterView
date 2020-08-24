@@ -4,3 +4,4 @@
 4.  Gold Mine
 5.  Friends Pairing Problem
 6.  Subset Sum Problem
+7.  nth Catalan number
