@@ -1,7 +1,8 @@
 
 When should we think about DP
-    1.  Mostly problem will of optimisation or reducible to optimisation
-    2.  Overlapping subproblem
+
+        1.  Mostly problem will of optimisation or reducible to optimisation
+        2.  Overlapping subproblem
 
 Greedy vs Divide and Conquer vs DP
 
