@@ -12,11 +12,26 @@ Right Shift >>
 
 
 Bitwise and &
+    0 & 1 = 0
+    1 & 0 = 0
+    0 & 0 = 0
+    1 & 1 = 1
 
 Bitwise or |
-
-Bitwise not ^
+    0 | 1 = 1
+    1 | 0 = 1
+    0 | 0 = 0
+    1 | 1 = 1
+    
+Bitwise not ~
+    ~ 0 = 1
+    ~ 1 = 0
+    ~0100 = 1011(Negative 5, msb will be changed)
 
 Bitwise xor ^
-
+    0 ^ 1 = 1
+    1 ^ 0 = 1
+    0 ^ 0 = 0
+    1 ^ 1 = 0
+    
 
