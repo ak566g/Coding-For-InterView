@@ -15,3 +15,4 @@
 15. Longest Increasing Subsequence
 16. Longest Bitonic Subsequence
 17. Staircase
+18. Maximum Subrectangle sum (Kadane's Algo)
