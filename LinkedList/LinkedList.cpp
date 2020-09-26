@@ -47,4 +47,11 @@ class LinkedList
         return;
     }
 
+    ~LinkedList()
+    {
+        delete head;
+        delete tail;
+    }
+
+
 };

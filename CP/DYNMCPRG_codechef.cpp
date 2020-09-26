@@ -16,6 +16,7 @@ int main(){
 
         int temp=m;
         ll ans=LLONG_MAX;
+        
         ll *a = new ll[n];
         vector<ll>mini;
 
@@ -47,19 +48,17 @@ int main(){
 
             if(temp==2)
             {
-                sort(mini.begin(),mini.end());
-                ans=mini[0];
+                ans= min(mini[0],mini[1]);
             }
             else if(temp==3)
             {
-                ans=min(a[0]+a[2],a[1]);
+                ans=min(mini[0]+mini[2],mini[1]);
             }
             else
             {
-                ans=min(a[0]+a[2],min(a[1]+a[3], a[0]+a[3]));
+                ans=min(mini[0]+mini[2],min(mini[1]+mini[3], mini[0]+mini[3]));
             }
             
-
         }
         
 
