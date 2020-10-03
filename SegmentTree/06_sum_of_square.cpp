@@ -108,8 +108,6 @@ void addInRange(int start, int end, int l, int r, int ti, int val)
         {
             lazy[2*ti].set=lazy[ti].set;
             lazy[2*ti+1].set=lazy[ti].set;
-            lazy[2*ti].add=0;
-            lazy[2*ti+1].add=0;
         }
         
         lazy[ti].set=0;
@@ -178,8 +176,6 @@ void updateInRange(int start, int end, int l, int r, int ti, int val)
         {
             lazy[2*ti].set=lazy[ti].set;
             lazy[2*ti+1].set=lazy[ti].set;
-            lazy[2*ti].add=0;
-            lazy[2*ti+1].add=0;
         }
         
         lazy[ti].set=0;
@@ -195,9 +191,6 @@ void updateInRange(int start, int end, int l, int r, int ti, int val)
         {
             lazy[2*ti].set=val;
             lazy[2*ti+1].set=val;
-            lazy[2*ti].add=0;
-            lazy[2*ti+1].add=0;
-            
         }
         return;
     }
