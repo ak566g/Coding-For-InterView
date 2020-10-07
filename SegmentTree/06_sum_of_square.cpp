@@ -8,16 +8,15 @@ class Tree{
 };
 
 class Lazy{
-    public:
+  	public:
     int set;
-	int add;
+    int add;
 };
 
-Tree tree[400000];
 Lazy lazy[400000];
-int a[100000];
+Tree tree[400000];
 
-void buildTree(int start, int end, int ti)
+void buildTree(int *a, int start, int end, int ti)
 {
     if(start==end)
     {
@@ -26,35 +25,41 @@ void buildTree(int start, int end, int ti)
         return;
     }
     
+    int mid= (start+end)/2;
     
-    int mid = (start + end)/2;
+    buildTree(a, start, mid, 2*ti);
+    buildTree(a, mid+1, end, 2*ti+1);
     
-    buildTree(start, mid, 2*ti);
-    buildTree(mid+1, end, 2*ti+1);
+    tree[ti].s=tree[2*ti].s+tree[2*ti+1].s;
+    tree[ti].ss=tree[2*ti].ss+tree[2*ti+1].ss;
     
-    tree[ti].s= tree[2*ti].s + tree[2*ti+1].s;
-    tree[ti].ss= tree[2*ti].ss + tree[2*ti+1].ss;
+    return;
 }
-
 
 Tree queryTree(int start, int end, int l, int r, int ti)
 {
-    if(start>r || end <l)
+    if(start>end)
     {
-        Tree ans;
-        ans.s=0;
-        ans.ss=0;
-        return ans;
+        return {0, 0};
     }
+    
+    
+    if(start>r || end<l)
+    {
+        return {0, 0};
+    }
+    
+    
     if(lazy[ti].set!=0)
     {
-        tree[ti].ss = (r-l+1)*lazy[ti].set*lazy[ti].set;
-        tree[ti].s = (r-l+1)*lazy[ti].set;
+        int x= lazy[ti].set;
+        tree[ti].ss = (r-l+1)*x*x;
+        tree[ti].s= (r-l+1)*x;
         
         if(start!=end)
         {
-            lazy[2*ti].set=lazy[ti].set;
-            lazy[2*ti+1].set=lazy[ti].set;
+            lazy[2*ti].set=x;
+            lazy[2*ti+1].set=x;
         }
         
         lazy[ti].set=0;
@@ -62,13 +67,14 @@ Tree queryTree(int start, int end, int l, int r, int ti)
     
     if(lazy[ti].add!=0)
     {
-        tree[ti].ss+=((r-l+1)*(lazy[ti].add*lazy[ti].add) + 2 * tree[ti].s * lazy[ti].add);
-        tree[ti].s+=(r-l+1)*lazy[ti].add;
+        int x = lazy[ti].add;
+        tree[ti].ss+=((r-l+1)*x*x + 2*x*tree[ti].s);
+        tree[ti].s+= (r-l+1)*x;
         
         if(start!=end)
         {
-            lazy[2*ti].add+=lazy[ti].add;
-            lazy[2*ti+1].add+=lazy[ti].add;
+            lazy[2*ti].add+=x;
+            lazy[2*ti+1].add+=x;
         }
         
         lazy[ti].add=0;
@@ -81,33 +87,105 @@ Tree queryTree(int start, int end, int l, int r, int ti)
         return tree[ti];
     }
     
-    int mid = (start + end)/2;
+    int mid = (start+end)/2;
     
     Tree left = queryTree(start, mid, l, r, 2*ti);
     Tree right = queryTree(mid+1, end, l, r, 2*ti+1);
     
     Tree ans;
-    ans.ss = left.ss+right.ss;
-    ans.s = left.s+right.s;
+    ans.s= left.s+right.s;
+    ans.ss= left.ss+right.ss;
     
     return ans;
 }
 
-void addInRange(int start, int end, int l, int r, int ti, int val)
+void setValue(int start, int end, int l, int r, int ti, int val)
 {
     if(start>end)
+    {
         return;
+    }
+    
+    if(lazy[ti].set!=0)
+    {
+        int x= lazy[ti].set;
+        tree[ti].ss = (r-l+1)*x*x;
+        tree[ti].s= (r-l+1)*x;
+        
+        if(start!=end)
+        {
+            lazy[2*ti].set=x;
+            lazy[2*ti+1].set=x;
+        }
+        
+        lazy[ti].set=0;
+    }
+    
+    
+    if(lazy[ti].add!=0)
+    {
+        int x = lazy[ti].add;
+        tree[ti].ss+= 2*x*tree[ti].s + (r-l+1)*x*x;
+        tree[ti].s+= (r-l+1)*x;
+        
+        if(start!=end)
+        {
+            lazy[2*ti].add+=x;
+            lazy[2*ti+1].add+=x;
+        }
+        
+        lazy[ti].add=0;
+    }
+    
+    
+    if(start>r || end<l)
+    {
+        return;
+    }
+    
+    if(start>=l && end<=r)
+    {
+        tree[ti].ss=(end-start+1)*val*val;
+        tree[ti].s=(end-start+1)*val;
+        z
+        if(start!=end)
+        {
+            lazy[2*ti].set=val;
+            lazy[2*ti+1].set=val;
+        }
+       lazy[ti].set=0;
+        return;
+    }
+    
+    int mid = (start+end)/2;
+    setValue(start, mid, l, r, 2*ti, val);
+    setValue(mid+1, end, l, r, 2*ti+1, val);
+    
+    tree[ti].s=tree[2*ti].s + tree[2*ti+1].s;
+    tree[ti].ss=tree[2*ti].ss + tree[2*ti+1].ss;
+    
+    return;
+}
+
+
+void addValue(int start, int end, int l, int r, int ti, int val)
+{
+ 	if(start>end)
+    {
+        return;
+    }
     
     
     if(lazy[ti].set!=0)
     {
-        tree[ti].ss = (r-l+1)*lazy[ti].set*lazy[ti].set;
-        tree[ti].s = (r-l+1)*lazy[ti].set;
+        int x= lazy[ti].set;
+        tree[ti].ss = (r-l+1)*x*x;
+        tree[ti].s= (r-l+1)*x;
         
         if(start!=end)
         {
-            lazy[2*ti].set=lazy[ti].set;
-            lazy[2*ti+1].set=lazy[ti].set;
+            lazy[2*ti].set=x;
+            lazy[2*ti+1].set=x;
         }
         
         lazy[ti].set=0;
@@ -115,147 +193,101 @@ void addInRange(int start, int end, int l, int r, int ti, int val)
     
     if(lazy[ti].add!=0)
     {
-        tree[ti].ss+=(2*tree[ti].s*lazy[ti].add) +(r-l+1)*(lazy[ti].add*lazy[ti].add);
-        tree[ti].s+= (r-l+1)*lazy[ti].add;
+        int x = lazy[ti].add;
+        tree[ti].ss+=((r-l+1)*x*x + 2*x*tree[ti].s);
+        tree[ti].s+= (r-l+1)*x;
         
         if(start!=end)
         {
-            lazy[2*ti].add+=lazy[ti].add;
-            lazy[2*ti+1].add+=lazy[ti].add;
+            lazy[2*ti].add+=x;
+            lazy[2*ti+1].add+=x;
         }
         
         lazy[ti].add=0;
     }
     
-   	if(start>r|| end<l)
+    
+    if(start>r || end<l)
     {
         return;
     }
-    
+ 
     
     if(start>=l && end<=r)
     {
-        tree[ti].ss+=(2 * tree[ti].s * val)+ (end-start+1)*val*val;
-        tree[ti].s+=(end-start+1)*val;
+        tree[ti].ss+= 2*val*tree[ti].s+(end-start+1)*val*val;
+        tree[ti].s+=((end-start+1)*val);
         
-         
         if(start!=end)
         {
             lazy[2*ti].add+=val;
             lazy[2*ti+1].add+=val;
         }
+        lazy[ti].add=0;
         return;
     }
     
+    int mid = (start+end)/2;
+    addValue(start, mid, l, r, 2*ti, val);
+    addValue(mid+1, end, l, r, 2*ti+1, val);
     
-    int mid = (start + end)/2;
-    addInRange(start, mid, l, r, 2*ti, val);
-    addInRange(mid+1, end, l, r, 2*ti+1, val);
+    tree[ti].s=tree[2*ti].s + tree[2*ti+1].s;
+    tree[ti].ss=tree[2*ti].ss + tree[2*ti+1].ss;
     
-    tree[ti].s= tree[2*ti].s+tree[2*ti+1].s;
-    tree[ti].ss= tree[2*ti].ss+tree[2*ti+1].ss;
-}
-
-
-void updateInRange(int start, int end, int l, int r, int ti, int val)
-{
-    if(start>end)
-        return;
-    
-    if(start>r|| end<l)
-    {
-        return;
-    }
-    
-    if(lazy[ti].set!=0)
-    {
-        tree[ti].ss = (r-l+1)*lazy[ti].set*lazy[ti].set;
-        tree[ti].s = (r-l+1)*lazy[ti].set;
-        
-        if(start!=end)
-        {
-            lazy[2*ti].set=lazy[ti].set;
-            lazy[2*ti+1].set=lazy[ti].set;
-        }
-        
-        lazy[ti].set=0;
-    }
-    
-    if(start>=l && end<=r)
-    {
-        tree[ti].ss= (end-start+1)*val*val;
-        tree[ti].s=(end-start+1)*val;
-        
-         
-        if(start!=end)
-        {
-            lazy[2*ti].set=val;
-            lazy[2*ti+1].set=val;
-        }
-        return;
-    }
-    
-    
-    int mid = (start + end)/2;
-    updateInRange(start, mid, l, r, 2*ti, val);
-    updateInRange(mid+1, end, l, r, 2*ti+1, val);
-    
-    tree[ti].s= tree[2*ti].s+tree[2*ti+1].s;
-    tree[ti].ss= tree[2*ti].ss+tree[2*ti+1].ss;
-    
+    return;
 }
 
 int main() {
-  	int t;
-	cin>>t;
+	int t;
+    cin>>t;
     
-    int count=1;
-    while(t--)
+    for(int i=1;i<=t;i++)
     {
-        int n,q;
+        cout<<"Case "<<i<<":\n";
+        int n, q;
         cin>>n>>q;
-        cout<<"Case "<<count<<":\n";
-        count++;
+        
+        int *a = new int[n];
         
         for(int i=0;i<n;i++)
-        {
             cin>>a[i];
-        }
+        
         
         for(int i=0;i<4*n;i++)
         {
-            lazy[i].set=0;
             lazy[i].add=0;
-            tree[i].ss=0;
-            tree[i].s=0;
+            lazy[i].set=0;
         }
         
-        buildTree(0,n-1,1);
+        buildTree(a,0,n-1,1);
         
         while(q--)
         {
-            int choice;
-            cin>>choice;
+            int option;
+            cin>>option;
             
-            if(choice==0)
+            if(option==0)
             {
-                int start , end, val;
-                cin>>start>>end>>val;
-                updateInRange(0,n-1,start-1,end-1,1,val);
+                int l, r, x;
+                cin>>l>>r>>x;
+                
+                setValue(0,n-1,l-1,r-1,1,x);
             }
-            if(choice==1)
+            
+            else if(option==1)
             {
-                int start , end, val;
-                cin>>start>>end>>val;
-                addInRange(0,n-1,start-1,end-1,1,val);
+                int l, r, x;
+                cin>>l>>r>>x;
+                
+                addValue(0,n-1,l-1,r-1,1,x);
             }
-            if(choice==2)
+            else if(option==2)
             {
-                int start, end;
-                cin>>start>>end;
-                cout<<queryTree(0,n-1, start-1, end-1,1).ss<<"\n";
+                int l, r;
+                cin>>l>>r;
+                
+                cout<<queryTree(0,n-1,l-1,r-1,1).ss<<"\n";
             }
         }
     }
-    
 }

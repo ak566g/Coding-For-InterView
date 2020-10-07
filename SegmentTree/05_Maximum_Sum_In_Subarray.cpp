@@ -7,104 +7,99 @@
 // Given M queries, your program must output the results of these queries.
 
 #include<bits/stdc++.h>
+#define INF -100000
 using namespace std;
-
 class Tree{
-    public:
+  	public:
     int prefix;
     int suffix;
     int sum;
-    int maxSum;
+    int maxsum;
 };
 
-void buildTree(int *a, int start, int end, Tree *tree, int ti)
+
+Tree compare (Tree t1, Tree t2)
+{
+    Tree ans;
+    ans.prefix = max(t1.prefix, t1.sum+t2.prefix);
+    ans.suffix = max(t2.suffix, t1.suffix+t2.sum);
+    ans.sum = t1.sum+t2.sum;
+    ans.maxsum = max(t1.maxsum, max(t2.maxsum, t1.suffix+t2.prefix));
+    
+    return ans;
+}
+
+void buildTree(int *a, Tree *tree, int start, int end, int ti)
 {
     if(start==end)
     {
-        tree[ti].sum=a[start];
         tree[ti].prefix=a[start];
         tree[ti].suffix=a[start];
-        tree[ti].maxSum=a[start];
+        tree[ti].sum=a[start];
+        tree[ti].maxsum=a[start];
         return;
     }
     
-    int mid= (start + end)/2;
-	
-    buildTree(a, start, mid, tree, 2*ti);
-    buildTree(a, mid+1, end, tree, 2*ti+1);
+    int mid = (start + end)/2;
     
-    Tree left = tree[2*ti];
-    Tree right = tree[2*ti+1];
+    buildTree(a, tree, start, mid, 2*ti);
+    buildTree(a, tree, mid+1, end, 2*ti+1);
     
-   	tree[ti].prefix= max(left.prefix, left.sum+right.prefix);
-    tree[ti].suffix= max(right.suffix, right.sum+left.suffix);
-    tree[ti].sum = left.sum+ right.sum;
-    //tree[ti].maxSum =max(left.maxSum, max(right.maxSum, max(left.sum+right.prefix,max(right.sum+left.suffix, left.suffix+right.prefix))));
-    tree[ti].maxSum = max(left.maxSum, max(right.maxSum, left.suffix + right.prefix));
+    tree[ti]= compare(tree[2*ti], tree[2*ti+1]);
     
     return;
 }
 
-
-Tree queryTree(Tree *tree, int start , int end, int l, int r, int ti)
+Tree queryTree(Tree *tree, int start, int end, int l, int r, int ti)
 {
-    if(r<start || l>end)
+    if(start>end)
     {
-        Tree ans;
-        ans.prefix=-100000; // INT_MIN will not work here because of integer overflow :(
-        
-        ans.suffix=-100000;
-        ans.sum=-100000;
-        ans.maxSum=-100000;
-        return ans;
+        return {INF, INF, INF, INF};
     }
     
+    if(start>r || end<l)
+    {
+        return {INF, INF, INF, INF};
+    }
     
     if(start>=l && end<=r)
     {
         return tree[ti];
     }
     
-    
-    int mid= (start + end)/2;
+    int mid = (start+end)/2;
     
     Tree left = queryTree(tree, start, mid, l, r, 2*ti);
-    Tree right = queryTree(tree, mid+1, end, l, r, 2*ti +1);
+    Tree right = queryTree(tree, mid+1, end, l, r, 2*ti+1);
     
-    Tree ans;
-    ans.prefix= max(left.prefix, left.sum+right.prefix);
-    ans.suffix= max(right.suffix, right.sum+left.suffix);
-    ans.sum = left.sum+ right.sum;
-    //ans.maxSum = max(left.maxSum, max(right.maxSum, max(left.sum+right.prefix,max(right.sum+left.suffix, left.suffix+right.prefix))));
-    ans.maxSum= max(left.maxSum, max(right.maxSum, left.suffix + right.prefix));
+    Tree ans= compare(left, right);
     
     return ans;
- 	   
 }
 
-int main() {
 
+int main() {
 	int n;
     cin>>n;
     
     int *a = new int[n];
     
     for(int i=0;i<n;i++)
+    {
         cin>>a[i];
+    }
     
-    Tree *tree = new Tree[4*n];
-    
-    buildTree(a,0,n-1,tree,1);
+    Tree *tree= new Tree[4*n];
+    buildTree(a, tree, 0, n-1, 1);
     
     int q;
     cin>>q;
     
     while(q--)
     {
-        int l,r;
+        int l, r;
         cin>>l>>r;
-        l--;
-        r--;
-        cout<<queryTree(tree, 0, n-1, l, r, 1).maxSum<<"\n";
+        
+        cout<<queryTree(tree, 0, n-1, l-1, r-1, 1).maxsum<<"\n";
     }
 }
