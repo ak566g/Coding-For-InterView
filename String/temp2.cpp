@@ -25,8 +25,9 @@ int weightCapacity(vector<int>v, int maxWeight)
                 dp[i][j]=dp[i-1][j];
             }
             
-        }
-    }
+        }=-+/
+        
+           }
 
     return dp[n][maxWeight];
 }
