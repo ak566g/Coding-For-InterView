@@ -5,8 +5,6 @@ vector<int>edges[100001];
 bool visited[100001];
 int cost[100001];
 
-// Initially done using dijkstra's but it was finding shortest path to all vertex so, it is giving tle..
-
 // int minCross(int n)
 // {
 //     cost[0]=0;
@@ -38,7 +36,6 @@ int cost[100001];
 //     return cost[n];
 // }
 
-// Easy solution using bfs...
 int minCross(int n)
 {
     queue<int>q;
