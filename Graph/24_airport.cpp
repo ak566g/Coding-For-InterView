@@ -1,1 +1,1 @@
-// https://codeforces.com/problemset/problem/218/B
+// https://vjudge.net/problem/LightOJ-1059
