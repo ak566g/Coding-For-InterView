@@ -2,6 +2,9 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// Time Complexity -- 
+// n loglogn
+
 bool seive[1000001];
 
 void init()
@@ -10,7 +13,7 @@ void init()
     seive[0]=false;
     seive[1]=false;
     
-    for(int i=2;i<=1000000;i++)
+    for(int i=2;i*i<=1000000;i++)
     {
         if(seive[i]==true)
         {
