@@ -1,5 +1,15 @@
 //by Ankita Gupta
 
+// find highest i such that nums[i]<nums[i+1]
+// if no such index exist then there is no next permutation.
+
+// find the highest j > i such that s[j]>s[i]
+
+// swap s[i] and s[j]
+
+// reverse the elements after i.
+
+
 class Solution {
 public:
     void nextPermutation(vector<int>& nums) {
