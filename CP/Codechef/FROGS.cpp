@@ -3,6 +3,13 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+class FROG{
+    public:
+        int index;
+        int l;
+        int w;
+};
+
 int main(){
 
     int t;
@@ -11,26 +18,51 @@ int main(){
     while(t--){
         int n;
         cin>>n;
-
-        int w[n], l[n];
-
-        for(int i=0;i<n;i++){
-            cin>>w[i];
-        }
+        FROG frogs[n];
 
         for(int i=0;i<n;i++){
-            cin>>l[i];
+            cin>>frogs[i].w;
+        }
+        for(int i=0;i<n;i++){
+            cin>>frogs[i].l;
+            frogs[i].index = i+1;
         }
 
-        if(w[0]>w[1] && l[0]==1){
-            cout<<2<<"\n";
+        bool ans = false;
+        int count = 0;
+
+        while(!ans){
+            bool flag = true;
+            for(int i = 0; i<n ;i++){
+                for(int  j = 0; j<n ;j++){
+                    if(frogs[i].w > frogs[j].w && frogs[i].index <= frogs[j].index){
+                        flag = false;
+                        break;
+                    } 
+                }
+                if(!flag){
+                    break;
+                }
+            }
+
+            if(flag){
+                ans = true;
+                break;
+            }
+
+            for(int i  = 0; i< n ;i++){
+                for(int j = 0; j< n; j++){
+                    if(i!=j){
+                        if(frogs[i].w > frogs[j].w && frogs[i].index <= frogs[j].index){
+                            while(frogs[i].index <= frogs[j].index){
+                                frogs[i].index += frogs[i].l;
+                                count++;
+                            }
+                        }
+                    }
+                }
+            }
         }
-        else if(w[0]>w[1]){
-            cout<<1<<"\n";
-        }
-        else{
-            cout<<0<<"\n";
-        }
+        cout<<count<<"\n";
     }
-
 }
