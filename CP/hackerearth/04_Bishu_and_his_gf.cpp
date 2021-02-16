@@ -1,6 +1,3 @@
-// https://www.hackerearth.com/practice/algorithms/graphs/depth-first-search/practice-problems/algorithm/bishu-and-his-girlfriend/submissions/
-
-
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -9,12 +6,12 @@ int dist[10001];
 bool visited[10001];
 vector<int>gc;
 
-void dfs(int s, int d){
+void dfs(int s){
 	visited[s]=true;
-	dist[s] = d;
 	for(auto x:graph[s]){
 		if(visited[x]==false){
-			dfs(x, dist[d]+1);
+			dist[x]=dist[s]+1;
+			dfs(x);
 		}
 	}
 }
@@ -24,7 +21,7 @@ int girlfriend(int n){
 	dist[0]=0;
 	dist[1]=0;
 
-	dfs(1,0);
+	dfs(1);
 
 	int d=INT_MAX, ans=0;
 	
