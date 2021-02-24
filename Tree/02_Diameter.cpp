@@ -21,8 +21,7 @@ PAIR cal(Node *node){
     P3.height=h;
     P3.diameter=d;
     
-    return P3;
-    
+    return P3; 
 }
 
 
@@ -31,7 +30,6 @@ int diameter(Node* node) {
     // Your code here
     
     PAIR P= cal(node);
-    
     return P.diameter+1;
-    
+
 }
