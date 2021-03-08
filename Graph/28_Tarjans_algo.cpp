@@ -23,6 +23,7 @@ void dfs(vector<vector<int>>&graph, int u, vector<int>&disc, vector<int>&low, st
     st.push(u);
     time+=1;
 
+    // disc == discovery time
     for(auto i:graph[u]){
         if(disc[i]==-1){
             dfs(graph, i, disc, low, st, inStack);

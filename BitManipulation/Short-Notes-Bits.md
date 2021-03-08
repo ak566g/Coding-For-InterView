@@ -35,3 +35,5 @@ Bitwise xor ^
     1 ^ 1 = 0
     
 
+ if A^B == C 
+ then A^C == B
