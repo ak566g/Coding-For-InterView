@@ -1,37 +1,59 @@
 //by Ankita Gupta
 
+
+    // n number of people
+    // e number of eggs
+    // h number of chocolates
+    // a cost of omelette
+    // b cost of milkshake
+    // c cost of cake
+
+    // 2 eggs for omellete
+    // 3 chocolates for milkshake
+    // 1 egg 1 chocolate for cake
+
+ 
 #include<bits/stdc++.h>
-#define mx INT_MAX
 #define ll long long
 using namespace std;
 
-ll minCost(int n, int e, int h, int a, int b, int c){
-    if(n==0){
+ll colclf4(ll n, ll e, ll h, ll a, ll b, ll c){
+    if(n<=0){
         return 0;
     }
 
-    ll cost1 = mx;
-    ll cost2 = mx;
-    ll cost3 = mx;
+    ll ans = 1e15;
 
-    // cake
-    if(e>=1&& h>=1){
-        cost1 = c+ minCost(n-1, e-1, h-1, a, b, c);
+    // all omellete
+    if(e>=2*n){
+        ans = min(ans, a*n);
     }
 
-    //omlette
-    if(e>=2){
-        cost2 = a + minCost(n-1, e-2, h, a, b, c);
+    // all milkshake
+    if(h>=3*n){
+        ans = min(ans, b*n);
     }
 
-    // chocolate milkshake
-    if(h>=3){
-        cost3 = b + minCost(n-1, e, h-3, a, b, c);
+    // all cake
+    if(n<=e && n<=h){
+        ans = min(ans, c*n);
     }
 
-    // cout<<min(cost1, min(cost2, cost3))<<"\n";
-    return min(cost1, min(cost2, cost3));
+    // milkshake and cake
+
+    if((h-n)>=2 && (h-n)>=2*(n-e)){
+        ll x;
+        
+        if(b<c){
+            x = min(n-1, (h-1)/3);
+            ans = min(ans, x*b + (n-x)*c);
+        }else{
+            
+        }
+    }
+
 }
+
 
 int main(){
     ios_base::sync_with_stdio(false);
@@ -41,18 +63,11 @@ int main(){
     cin>>t;
 
     while(t--){
-        int n, e, h, a, b, c;
-
+        ll n, e, h, a, b, c;
         cin>>n>>e>>h>>a>>b>>c;
 
-        ll ans = minCost(n, e, h, a, b, c);
-
-        if(ans>=mx){
-            cout<<-1;
-        }else{
-            cout<<ans;
-        }
-
-        cout<<"\n";
+        
     }
+
+
 }
