@@ -33,3 +33,28 @@ int diameter(Node* node) {
     return P.diameter+1;
 
 }
+
+// Another Approach
+
+class Solution {
+public:
+    
+    int height(TreeNode* root){
+        if(root==NULL)
+            return 0;
+        
+        return 1+ max(height(root->left), height(root->right));
+    }
+    
+    int diameterOfBinaryTree(TreeNode* root) {
+        if(root==NULL)
+            return 0;
+        
+        int leftD = diameterOfBinaryTree(root->left);
+        int rightD = diameterOfBinaryTree(root->right);
+        
+        int cur = height(root->left) + height(root->right);
+        
+        return max(leftD, max(rightD, cur));
+    }
+};
