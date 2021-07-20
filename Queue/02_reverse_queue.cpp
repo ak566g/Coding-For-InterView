@@ -8,7 +8,7 @@ void reverseQueue(queue<int> &q) {
 	if(q.size()==0||q.size()==1)
         return;
     
-    int element=q.front();
+    int element=q.front()
     q.pop();
     reverseQueue(q);
     q.push(element);

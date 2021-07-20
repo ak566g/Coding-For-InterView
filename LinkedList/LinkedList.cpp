@@ -1,4 +1,6 @@
 //by Ankita Gupta
+#include <bits/stdc++.h>
+using namespace std;
 class LinkedList
 {
     public:
@@ -47,11 +49,34 @@ class LinkedList
         return;
     }
 
+    Node * partitionLL(Node *head){
+        if(head==NULL || head->next==NULL){
+            return head;
+        }
+
+        int val = head->data;
+        Node* prev = head;
+        Node* cur = head->next;
+
+        while(cur){
+            if(cur->data < val){
+                Node* temp = cur;
+                Node* temp2 = cur->next;
+                prev -> next = cur -> next;
+                temp->next = head;
+                head = temp;
+                cur = temp2;
+            }else{
+                prev = cur;
+                cur = cur->next;
+            }
+        }
+        return head;
+    }
+
     ~LinkedList()
     {
         delete head;
         delete tail;
     }
-
-
 };
