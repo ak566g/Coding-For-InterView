@@ -25,7 +25,7 @@ void dfs(int node, int parent){
         }else{
             dfs(child, node);
             
-            if(in[node]< low[child]){
+            if(in[node] < low[child]){
                cout<<node<<" "<<child<<"\n";
             }
 
@@ -33,6 +33,7 @@ void dfs(int node, int parent){
         }
     }
 }
+
 
 int main(){
     ios_base::sync_with_stdio(false);
