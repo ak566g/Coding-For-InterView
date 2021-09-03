@@ -13,7 +13,7 @@ class Node {
             right = NULL;
         }
 };
-1
+
 class Solution {
     public:
   	
